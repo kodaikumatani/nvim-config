@@ -20,7 +20,44 @@
 brew install font-jetbrains-mono-nerd-font
 ```
 
-インストール後、ターミナルのフォント設定を「JetBrains Mono Nerd Font」に変更してください。
+#### ターミナルのフォント設定
+
+インストール後、使用しているターミナルでフォントを設定してください。
+
+**iTerm2:**
+1. `iTerm2` → `Preferences` (⌘,)
+2. `Profiles` → `Text` タブ
+3. `Font` を `JetBrainsMono Nerd Font` に変更
+4. サイズは 14pt 程度を推奨
+
+**Terminal.app (デフォルト):**
+1. `Terminal` → `Preferences`
+2. `Profiles` → `Text` タブ
+3. `Font` ボタンをクリックして `JetBrainsMono Nerd Font` を選択
+
+**Alacritty:**
+`~/.config/alacritty/alacritty.yml`:
+```yaml
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+    style: Regular
+  size: 14.0
+```
+
+**Kitty:**
+`~/.config/kitty/kitty.conf`:
+```
+font_family JetBrainsMono Nerd Font
+font_size 14.0
+```
+
+**WezTerm:**
+`~/.config/wezterm/wezterm.lua`:
+```lua
+config.font = wezterm.font('JetBrainsMono Nerd Font')
+config.font_size = 14.0
+```
 
 ### 2. 設定のクローン
 
