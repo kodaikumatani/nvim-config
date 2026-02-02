@@ -18,6 +18,17 @@ vim.cmd.colorscheme("tokyonight")
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { noremap = true, silent = true, desc = "Toggle Neo-tree" })
 vim.keymap.set("n", "<leader>g", ":Neotree git_status<CR>", { noremap = true, silent = true, desc = "Git変更ファイル" })
 
+-- Neovide設定
+if vim.g.neovide then
+  -- macOSのCmd key (Command key) を有効化
+  vim.g.neovide_input_use_logo = 1
+
+  -- Cmd+Shift+N で新しいウィンドウを開く
+  vim.keymap.set("n", "<D-N>", function()
+    vim.fn.jobstart("open -n -a Neovide", { detach = true })
+  end, { noremap = true, silent = true, desc = "新しいNeovideウィンドウを開く" })
+end
+
 -- ウィンドウ間の移動
 vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
