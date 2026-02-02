@@ -24,6 +24,9 @@ return {
         border = "curved",
         winblend = 0,
       },
+      on_open = function(term)
+        vim.cmd("startinsert!")
+      end,
     })
 
     -- ターミナルモードでのキーマップ
