@@ -35,6 +35,43 @@ if vim.g.neovide then
   -- Cmd+X でカット (visualモード)
   vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
 
+  -- ターミナルトグル機能
+  local terminal_buf = nil
+  local terminal_win = nil
+
+  local function toggle_terminal()
+    -- ターミナルウィンドウが開いているか確認
+    if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
+      vim.api.nvim_win_hide(terminal_win)
+      terminal_win = nil
+      return
+    end
+
+    -- ターミナルバッファが存在するか確認
+    if terminal_buf and vim.api.nvim_buf_is_valid(terminal_buf) then
+      -- 既存のターミナルバッファを開く
+      vim.cmd("botright split")
+      terminal_win = vim.api.nvim_get_current_win()
+      vim.api.nvim_win_set_buf(terminal_win, terminal_buf)
+      vim.api.nvim_win_set_height(terminal_win, 15)
+      vim.cmd("startinsert")
+    else
+      -- 新しいターミナルを作成
+      vim.cmd("botright split | terminal")
+      terminal_win = vim.api.nvim_get_current_win()
+      terminal_buf = vim.api.nvim_get_current_buf()
+      vim.api.nvim_win_set_height(terminal_win, 15)
+      vim.cmd("startinsert")
+    end
+  end
+
+  -- Cmd+J でターミナルをトグル
+  vim.keymap.set("n", "<D-j>", toggle_terminal, { noremap = true, silent = true, desc = "ターミナルをトグル" })
+  vim.keymap.set("t", "<D-j>", function()
+    vim.api.nvim_win_hide(terminal_win)
+    terminal_win = nil
+  end, { noremap = true, silent = true, desc = "ターミナルを閉じる" })
+
   -- Cmd+Shift+N で新しいウィンドウを開く
   vim.keymap.set("n", "<D-N>", function()
     vim.fn.jobstart("open -n -a Neovide", { detach = true })
