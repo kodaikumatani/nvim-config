@@ -30,6 +30,7 @@ if vim.g.neovide then
   vim.keymap.set("n", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
   vim.keymap.set("v", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
   vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, silent = true, desc = "ペースト" })
+  vim.keymap.set("t", "<D-v>", '<C-\\><C-n>"+pi', { noremap = true, silent = true, desc = "ターミナルでペースト" })
 
   -- Cmd+X でカット (visualモード)
   vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
