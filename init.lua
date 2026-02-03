@@ -23,6 +23,17 @@ if vim.g.neovide then
   -- macOSのCmd key (Command key) を有効化
   vim.g.neovide_input_use_logo = 1
 
+  -- Cmd+C でコピー (visualモード)
+  vim.keymap.set("v", "<D-c>", '"+y', { noremap = true, silent = true, desc = "コピー" })
+
+  -- Cmd+V でペースト
+  vim.keymap.set("n", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
+  vim.keymap.set("v", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
+  vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, silent = true, desc = "ペースト" })
+
+  -- Cmd+X でカット (visualモード)
+  vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
+
   -- Cmd+Shift+N で新しいウィンドウを開く
   vim.keymap.set("n", "<D-N>", function()
     vim.fn.jobstart("open -n -a Neovide", { detach = true })
