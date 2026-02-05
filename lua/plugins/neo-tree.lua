@@ -21,9 +21,11 @@ return {
         visible = true, -- 隠しファイルを表示
         hide_dotfiles = false,
         hide_gitignored = false,
-        hide_by_name = {
+        hide_hidden = false,
+        never_show = {
           ".git",
           ".DS_Store",
+          "thumbs.db",
         },
       },
     },

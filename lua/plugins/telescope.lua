@@ -15,6 +15,11 @@ return {
           },
         },
       },
+      pickers = {
+        find_files = {
+          hidden = true, -- 隠しファイルを表示
+        },
+      },
     })
     -- fzf拡張を読み込み
     require('telescope').load_extension('fzf')
