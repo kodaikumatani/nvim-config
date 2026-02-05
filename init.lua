@@ -14,6 +14,16 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 
+-- インサートモードを抜ける時に自動保存
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.modified and vim.bo.buftype == "" and vim.fn.filereadable(vim.fn.expand("%")) == 1 then
+      vim.cmd("silent! write")
+    end
+  end,
+})
+
 require("config.lazy")
 vim.cmd.colorscheme("tokyonight")
 
