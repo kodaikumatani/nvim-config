@@ -28,8 +28,7 @@ require("config.lazy")
 vim.cmd.colorscheme("tokyonight")
 
 -- キーマップ
-vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { noremap = true, silent = true, desc = "Toggle Neo-tree" })
-vim.keymap.set("n", "<leader>g", ":Neotree git_status<CR>", { noremap = true, silent = true, desc = "Git変更ファイル" })
+vim.keymap.set("n", "<leader>e", ":Neotree toggle reveal<CR>")
 
 -- Neovide設定
 if vim.g.neovide then
@@ -96,6 +95,12 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true, desc = "
 vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
+
+-- ターミナルモードでのウィンドウ移動（normalモードに入らずに直接移動）
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true, silent = true, desc = "ターミナルから左のウィンドウへ移動" })
+vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = true, desc = "ターミナルから下のウィンドウへ移動" })
+vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "ターミナルから上のウィンドウへ移動" })
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "ターミナルから右のウィンドウへ移動" })
 
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')

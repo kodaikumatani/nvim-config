@@ -8,9 +8,7 @@ return {
   },
   opts = {
     window = {
-      mappings = {
-        ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = false } },
-      },
+      position = "float",
     },
     filesystem = {
       follow_current_file = {
@@ -29,5 +27,18 @@ return {
         },
       },
     },
+    event_handlers = {
+      {
+        event = "after_render",
+        handler = function(state)
+          if not require("neo-tree.sources.common.preview").is_active() then
+            state.config = { use_float = true }
+            state.commands.toggle_preview(state)
+          end
+        end,
+      },
+    },
+    use_popups_for_input = false,
+    enable_cursor_hijack = false,
   },
 }
