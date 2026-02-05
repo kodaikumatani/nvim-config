@@ -1,3 +1,6 @@
+-- mise の PATH を設定（Go、goplsなどのツールを使用可能にする）
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
 -- Leader key
 vim.g.mapleader = " "
 
