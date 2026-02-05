@@ -17,6 +17,15 @@ return {
         enabled = true,
       },
       use_libuv_file_watcher = true,
+      filtered_items = {
+        visible = true, -- 隠しファイルを表示
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_by_name = {
+          ".git",
+          ".DS_Store",
+        },
+      },
     },
   },
 }
