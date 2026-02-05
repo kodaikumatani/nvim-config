@@ -18,6 +18,7 @@ return {
       pickers = {
         find_files = {
           hidden = true, -- 隠しファイルを表示
+          no_ignore = false, -- .gitignoreを尊重
         },
       },
     })
