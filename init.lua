@@ -25,82 +25,60 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 })
 
 require("config.lazy")
+require("config.neovide") -- Neovide設定
+
 vim.cmd.colorscheme("tokyonight")
 
 -- キーマップ
 vim.keymap.set("n", "<leader>e", ":Neotree toggle reveal<CR>")
 
--- Neovide設定
-if vim.g.neovide then
-  -- macOSのCmd key (Command key) を有効化
-  vim.g.neovide_input_use_logo = 1
-
-  -- Cmd+C でコピー (visualモード)
-  vim.keymap.set("v", "<D-c>", '"+y', { noremap = true, silent = true, desc = "コピー" })
-
-  -- Cmd+V でペースト
-  vim.keymap.set("n", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
-  vim.keymap.set("v", "<D-v>", '"+p', { noremap = true, silent = true, desc = "ペースト" })
-  vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, silent = true, desc = "ペースト" })
-  vim.keymap.set("t", "<D-v>", '<C-\\><C-n>"+pi', { noremap = true, silent = true, desc = "ターミナルでペースト" })
-
-  -- Cmd+X でカット (visualモード)
-  vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
-
-  -- ターミナルトグル機能
-  local terminal_buf = nil
-  local terminal_win = nil
-
-  local function toggle_terminal()
-    -- ターミナルウィンドウが開いているか確認
-    if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-      vim.api.nvim_win_hide(terminal_win)
-      terminal_win = nil
-      return
-    end
-
-    -- ターミナルバッファが存在するか確認
-    if terminal_buf and vim.api.nvim_buf_is_valid(terminal_buf) then
-      -- 既存のターミナルバッファを開く
-      vim.cmd("botright split")
-      terminal_win = vim.api.nvim_get_current_win()
-      vim.api.nvim_win_set_buf(terminal_win, terminal_buf)
-      vim.api.nvim_win_set_height(terminal_win, 15)
-      vim.cmd("startinsert")
-    else
-      -- 新しいターミナルを作成
-      vim.cmd("botright split | terminal")
-      terminal_win = vim.api.nvim_get_current_win()
-      terminal_buf = vim.api.nvim_get_current_buf()
-      vim.api.nvim_win_set_height(terminal_win, 15)
-      vim.cmd("startinsert")
-    end
+-- ウィンドウ間の移動（ターミナルに移動したら自動的にinsertモードへ）
+vim.keymap.set("n", "<C-h>", function()
+  vim.cmd("wincmd h")
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("startinsert")
   end
+end, { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
 
-  -- Cmd+J でターミナルをトグル
-  vim.keymap.set("n", "<D-j>", toggle_terminal, { noremap = true, silent = true, desc = "ターミナルをトグル" })
-  vim.keymap.set("t", "<D-j>", function()
-    vim.api.nvim_win_hide(terminal_win)
-    terminal_win = nil
-  end, { noremap = true, silent = true, desc = "ターミナルを閉じる" })
+vim.keymap.set("n", "<C-j>", function()
+  vim.cmd("wincmd j")
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("startinsert")
+  end
+end, { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
 
-  -- Cmd+Shift+N で新しいウィンドウを開く
-  vim.keymap.set("n", "<D-N>", function()
-    vim.fn.jobstart("open -n -a Neovide", { detach = true })
-  end, { noremap = true, silent = true, desc = "新しいNeovideウィンドウを開く" })
-end
+vim.keymap.set("n", "<C-k>", function()
+  vim.cmd("wincmd k")
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("startinsert")
+  end
+end, { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
 
--- ウィンドウ間の移動
-vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
+vim.keymap.set("n", "<C-l>", function()
+  vim.cmd("wincmd l")
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("startinsert")
+  end
+end, { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
 
 -- ターミナルモードでのウィンドウ移動（normalモードに入らずに直接移動）
 vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true, silent = true, desc = "ターミナルから左のウィンドウへ移動" })
 vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = true, desc = "ターミナルから下のウィンドウへ移動" })
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "ターミナルから上のウィンドウへ移動" })
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "ターミナルから右のウィンドウへ移動" })
+
+-- ターミナル
+vim.keymap.set("n", "<leader>tv", function()
+  vim.cmd("vsplit | terminal")
+  vim.cmd("startinsert")
+end, { noremap = true, silent = true, desc = "垂直分割でターミナルを開く" })
+
+vim.keymap.set("n", "<leader>th", function()
+  vim.cmd("split | terminal")
+  vim.cmd("startinsert")
+end, { noremap = true, silent = true, desc = "水平分割でターミナルを開く" })
+
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>:q<CR>", { noremap = true, silent = true, desc = "ターミナルを閉じる" })
 
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')
