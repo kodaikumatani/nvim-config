@@ -11,6 +11,7 @@ vim.lsp.config.gopls = {
     gopls = {
       analyses = {
         unusedparams = true,
+        ST1000 = false, -- "at least one file in a package should have a package comment"
       },
       staticcheck = true,
       hints = {

@@ -17,8 +17,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
-
       -- 診断メッセージをインラインで表示
       vim.diagnostic.config({
         virtual_text = {
@@ -62,16 +60,6 @@ return {
         end,
       })
 
-      -- gopls の設定（パッケージコメントの警告を無効化）
-      lspconfig.gopls.setup({
-        settings = {
-          gopls = {
-            analyses = {
-              ST1000 = false, -- "at least one file in a package should have a package comment"
-            },
-          },
-        },
-      })
     end,
   },
 }
