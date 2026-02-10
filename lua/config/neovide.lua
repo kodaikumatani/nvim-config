@@ -15,54 +15,30 @@ if vim.g.neovide then
   -- Cmd+X でカット (visualモード)
   vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
 
-  -- フローティングターミナルトグル機能
+  -- 左半分ターミナルトグル機能
   local terminal_buf = nil
   local terminal_win = nil
 
   local function toggle_terminal()
     -- ターミナルウィンドウが開いているか確認
     if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-      vim.api.nvim_win_hide(terminal_win)
+      vim.api.nvim_win_close(terminal_win, true)
       terminal_win = nil
       return
     end
 
-    -- ウィンドウサイズを取得
-    local width = vim.api.nvim_get_option("columns")
-    local height = vim.api.nvim_get_option("lines")
-
-    -- フローティングウィンドウの設定
-    local win_width = math.floor(width * 0.8)
-    local win_height = math.floor(height * 0.8)
-    local row = math.floor((height - win_height) / 2)
-    local col = math.floor((width - win_width) / 2)
-
     -- ターミナルバッファが存在するか確認
     if terminal_buf and vim.api.nvim_buf_is_valid(terminal_buf) then
       -- 既存のターミナルバッファを開く
-      terminal_win = vim.api.nvim_open_win(terminal_buf, true, {
-        relative = "editor",
-        width = win_width,
-        height = win_height,
-        row = row,
-        col = col,
-        style = "minimal",
-        border = "rounded",
-      })
+      vim.cmd("leftabove vsplit")
+      terminal_win = vim.api.nvim_get_current_win()
+      vim.api.nvim_win_set_buf(terminal_win, terminal_buf)
       vim.cmd("startinsert")
     else
-      -- 新しいターミナルバッファを作成
-      terminal_buf = vim.api.nvim_create_buf(false, true)
-      terminal_win = vim.api.nvim_open_win(terminal_buf, true, {
-        relative = "editor",
-        width = win_width,
-        height = win_height,
-        row = row,
-        col = col,
-        style = "minimal",
-        border = "rounded",
-      })
-      vim.fn.termopen(vim.env.SHELL or vim.o.shell)
+      -- 新しいターミナルを作成
+      vim.cmd("leftabove vsplit | terminal")
+      terminal_win = vim.api.nvim_get_current_win()
+      terminal_buf = vim.api.nvim_get_current_buf()
       vim.cmd("startinsert")
     end
   end
