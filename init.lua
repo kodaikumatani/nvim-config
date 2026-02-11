@@ -14,11 +14,13 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 
--- インサートモードを抜ける時に自動保存
+-- インサートモードを抜ける時に自動保存（フォーマット付き）
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   callback = function()
     if vim.bo.modified and vim.bo.buftype == "" and vim.fn.filereadable(vim.fn.expand("%")) == 1 then
+      -- BufWritePreを手動で実行してからwrite
+      vim.cmd("silent! doautocmd BufWritePre")
       vim.cmd("silent! write")
     end
   end,
