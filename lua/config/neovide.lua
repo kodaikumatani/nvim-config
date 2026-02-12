@@ -15,42 +15,14 @@ if vim.g.neovide then
   -- Cmd+X でカット (visualモード)
   vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
 
-  -- 左半分ターミナルトグル機能
-  local terminal_buf = nil
-  local terminal_win = nil
+  -- Cmd+J で左半分にターミナルを開く
+  vim.keymap.set("n", "<D-j>", function()
+    vim.cmd("leftabove vsplit | terminal")
+    vim.cmd("startinsert")
+  end, { noremap = true, silent = true, desc = "左半分にターミナルを開く" })
 
-  local function toggle_terminal()
-    -- ターミナルウィンドウが開いているか確認
-    if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-      vim.api.nvim_win_close(terminal_win, true)
-      terminal_win = nil
-      return
-    end
-
-    -- ターミナルバッファが存在するか確認
-    if terminal_buf and vim.api.nvim_buf_is_valid(terminal_buf) then
-      -- 既存のターミナルバッファを開く
-      vim.cmd("leftabove vsplit")
-      terminal_win = vim.api.nvim_get_current_win()
-      vim.api.nvim_win_set_buf(terminal_win, terminal_buf)
-      vim.cmd("startinsert")
-    else
-      -- 新しいターミナルを作成
-      vim.cmd("leftabove vsplit | terminal")
-      terminal_win = vim.api.nvim_get_current_win()
-      terminal_buf = vim.api.nvim_get_current_buf()
-      vim.cmd("startinsert")
-    end
-  end
-
-  -- Cmd+J でターミナルをトグル
-  vim.keymap.set("n", "<D-j>", toggle_terminal, { noremap = true, silent = true, desc = "ターミナルをトグル" })
-  vim.keymap.set("t", "<D-j>", function()
-    if terminal_win and vim.api.nvim_win_is_valid(terminal_win) then
-      vim.api.nvim_win_hide(terminal_win)
-      terminal_win = nil
-    end
-  end, { noremap = true, silent = true, desc = "ターミナルを閉じる" })
+  -- ターミナルモードで Ctrl+[ でnormalモードへ
+  vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", { noremap = true, silent = true, desc = "ターミナルからnormalモードへ" })
 
   -- Cmd+Shift+N で新しいウィンドウを開く
   vim.keymap.set("n", "<D-N>", function()
