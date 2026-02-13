@@ -12,6 +12,21 @@ return {
     },
     -- ターミナルなど特定のウィンドウを除外
     open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
+    default_component_configs = {
+      git_status = {
+        symbols = {
+          added     = "A",
+          modified  = "M",
+          deleted   = "D",
+          renamed   = "R",
+          untracked = "U",
+          ignored   = "",
+          unstaged  = "✗",
+          staged    = "✓",
+          conflict  = "C",
+        },
+      },
+    },
     filesystem = {
       follow_current_file = {
         enabled = true,
