@@ -10,6 +10,8 @@ return {
     window = {
       position = "float",
     },
+    -- ターミナルなど特定のウィンドウを除外
+    open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
     filesystem = {
       follow_current_file = {
         enabled = true,
@@ -25,17 +27,6 @@ return {
           ".DS_Store",
           "thumbs.db",
         },
-      },
-    },
-    event_handlers = {
-      {
-        event = "after_render",
-        handler = function(state)
-          if not require("neo-tree.sources.common.preview").is_active() then
-            state.config = { use_float = true }
-            state.commands.toggle_preview(state)
-          end
-        end,
       },
     },
     use_popups_for_input = false,
