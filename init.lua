@@ -14,6 +14,9 @@ vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 
+-- EditorConfig サポートを有効化（Neovim 0.9+ ビルトイン）
+vim.g.editorconfig = true
+
 require("config.lazy")
 require("config.neovide") -- Neovide設定
 
