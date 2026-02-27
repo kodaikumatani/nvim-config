@@ -80,3 +80,10 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'テキスト検�
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'バッファ検索' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'ヘルプ検索' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = '最近開いたファイル' })
+
+-- 外部でファイルが変更されたら自動的に読み直す (autoread)
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "if mode() != 'c' | checktime | endif",
+})
