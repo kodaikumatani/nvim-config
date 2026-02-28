@@ -82,6 +82,10 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'ヘルプ検索' 
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = '最近開いたファイル' })
 vim.keymap.set('n', '<leader>fp', "<cmd>Telescope projects<CR>", { desc = 'プロジェクト切り替え' })
 
+-- 最後のウィンドウで :q しても Neovide が終了しないようにする
+-- 最後の1枚のときは空バッファを開く（終了したいときは :qa）
+vim.cmd([[cnoreabbrev <expr> q (tabpagenr('$') == 1 && winnr('$') == 1) ? 'enew' : 'q']])
+
 -- 外部でファイルが変更されたら自動的に読み直す (autoread)
 vim.opt.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
