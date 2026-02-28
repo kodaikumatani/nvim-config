@@ -16,10 +16,27 @@ return {
             "filename",
             path = 1, -- 相対パスを表示
             symbols = {
-              modified = " ●", -- 変更されたファイル
-              readonly = " ", -- 読み取り専用
+              modified = "",
+              readonly = " ",
               unnamed = "[No Name]",
             },
+          },
+          {
+            function()
+              if vim.bo.modified then
+                return "●"
+              elseif vim.bo.buftype == "" and vim.fn.expand("%") ~= "" then
+                return "✓"
+              end
+              return ""
+            end,
+            color = function()
+              if vim.bo.modified then
+                return { fg = "#e06c75" }
+              else
+                return { fg = "#98c379" }
+              end
+            end,
           },
         },
         lualine_x = { "encoding", "fileformat", "filetype" },
