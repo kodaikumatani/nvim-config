@@ -80,7 +80,22 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'テキスト検�
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'バッファ検索' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'ヘルプ検索' })
 vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = '最近開いたファイル' })
-vim.keymap.set('n', '<leader>fp', "<cmd>Telescope projects<CR>", { desc = 'プロジェクト切り替え' })
+vim.keymap.set('n', '<leader>fp', function()
+  require("telescope").extensions.projects.projects({
+    attach_mappings = function(_, map)
+      local actions = require("telescope.actions")
+      map("i", "<CR>", function(prompt_bufnr)
+        local action_state = require("telescope.actions.state")
+        local selected = action_state.get_selected_entry()
+        actions.close(prompt_bufnr)
+        if selected then
+          vim.cmd("cd " .. selected.value)
+        end
+      end)
+      return true
+    end,
+  })
+end, { desc = 'プロジェクト切り替え' })
 
 -- 最後のウィンドウで :q しても Neovide が終了しないようにする
 -- 最後の1枚のときは空バッファを開く（終了したいときは :qa）
