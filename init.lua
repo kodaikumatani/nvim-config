@@ -60,19 +60,6 @@ vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = tru
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "ターミナルから上のウィンドウへ移動" })
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "ターミナルから右のウィンドウへ移動" })
 
--- ターミナル
-vim.keymap.set("n", "<leader>tv", function()
-  vim.cmd("vsplit | terminal")
-  vim.cmd("startinsert")
-end, { noremap = true, silent = true, desc = "垂直分割でターミナルを開く" })
-
-vim.keymap.set("n", "<leader>th", function()
-  vim.cmd("split | terminal")
-  vim.cmd("startinsert")
-end, { noremap = true, silent = true, desc = "水平分割でターミナルを開く" })
-
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>:q<CR>", { noremap = true, silent = true, desc = "ターミナルを閉じる" })
-
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'ファイル検索' })

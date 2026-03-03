@@ -29,8 +29,18 @@ return {
       vim.cmd("wincmd H")
     end, { desc = "Toggle terminal (left)" })
 
-    vim.keymap.set("n", "<leader>tt", function()
-      require("toggleterm").toggle(2, nil, nil, "tab")
+    vim.keymap.set({ "n", "t" }, "<leader>tt", function()
+      -- ターミナルバッファにいる場合、そのバッファを新しいタブに移動
+      if vim.bo.buftype == "terminal" then
+        local buf = vim.api.nvim_get_current_buf()
+        vim.cmd("close")
+        vim.cmd("tabnew")
+        vim.api.nvim_set_current_buf(buf)
+        vim.cmd("startinsert")
+      else
+        vim.cmd("tabnew | terminal")
+        vim.cmd("startinsert")
+      end
     end, { desc = "Toggle terminal (tab)" })
   end,
 }
