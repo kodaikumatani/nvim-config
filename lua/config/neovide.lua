@@ -15,12 +15,6 @@ if vim.g.neovide then
   -- Cmd+X でカット (visualモード)
   vim.keymap.set("v", "<D-x>", '"+d', { noremap = true, silent = true, desc = "カット" })
 
-  -- Cmd+J で左半分にターミナルを開く
-  vim.keymap.set("n", "<D-j>", function()
-    vim.cmd("leftabove vsplit | terminal")
-    vim.cmd("startinsert")
-  end, { noremap = true, silent = true, desc = "左半分にターミナルを開く" })
-
   -- ターミナルモードで Ctrl+[ でnormalモードへ
   vim.keymap.set("t", "<C-[>", "<C-\\><C-n>", { noremap = true, silent = true, desc = "ターミナルからnormalモードへ" })
 
