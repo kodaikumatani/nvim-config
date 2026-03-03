@@ -19,12 +19,7 @@ return {
     require("toggleterm").setup(opts)
 
     vim.keymap.set({ "n", "t" }, "<C-\\>", function()
-      local term = require("toggleterm.terminal").Terminal:new({
-        direction = "vertical",
-        dir = vim.fn.getcwd(),
-      })
-      -- If a terminal already exists, just toggle it on the left
-      require("toggleterm").toggle(1, nil, nil, "vertical")
+      require("toggleterm").toggle(1, nil, vim.fn.getcwd(), "vertical")
       -- Move the terminal window to the far left
       vim.cmd("wincmd H")
     end, { desc = "Toggle terminal (left)" })
