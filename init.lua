@@ -25,40 +25,11 @@ vim.cmd.colorscheme("tokyonight")
 -- キーマップ
 vim.keymap.set("n", "<leader>e", ":Neotree toggle reveal<CR>")
 
--- ウィンドウ間の移動（ターミナルに移動したら自動的にinsertモードへ）
-vim.keymap.set("n", "<C-h>", function()
-  vim.cmd("wincmd h")
-  if vim.bo.buftype == "terminal" then
-    vim.cmd("startinsert")
-  end
-end, { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
-
-vim.keymap.set("n", "<C-j>", function()
-  vim.cmd("wincmd j")
-  if vim.bo.buftype == "terminal" then
-    vim.cmd("startinsert")
-  end
-end, { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
-
-vim.keymap.set("n", "<C-k>", function()
-  vim.cmd("wincmd k")
-  if vim.bo.buftype == "terminal" then
-    vim.cmd("startinsert")
-  end
-end, { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
-
-vim.keymap.set("n", "<C-l>", function()
-  vim.cmd("wincmd l")
-  if vim.bo.buftype == "terminal" then
-    vim.cmd("startinsert")
-  end
-end, { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
-
--- ターミナルモードでのウィンドウ移動（normalモードに入らずに直接移動）
-vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true, silent = true, desc = "ターミナルから左のウィンドウへ移動" })
-vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = true, desc = "ターミナルから下のウィンドウへ移動" })
-vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "ターミナルから上のウィンドウへ移動" })
-vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "ターミナルから右のウィンドウへ移動" })
+-- ウィンドウ間の移動
+vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
+vim.keymap.set({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
+vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
+vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
 
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')
