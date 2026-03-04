@@ -10,12 +10,16 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls" },
+        ensure_installed = { "gopls", "ts_ls" },
       })
     end,
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+    },
     config = function()
       -- 診断メッセージをインラインで表示
       vim.diagnostic.config({
@@ -60,6 +64,19 @@ return {
         end,
       })
 
+      -- MasonでインストールされたLSPサーバーを自動で設定
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if has_cmp then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
+
+      for _, server_name in ipairs(require("mason-lspconfig").get_installed_servers()) do
+        vim.lsp.config(server_name, {
+          capabilities = capabilities,
+        })
+        vim.lsp.enable(server_name)
+      end
     end,
   },
 }
