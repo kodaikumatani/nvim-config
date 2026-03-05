@@ -47,6 +47,7 @@ vim.keymap.set('n', '<leader>fp', function()
         local selected = action_state.get_selected_entry()
         actions.close(prompt_bufnr)
         if selected then
+          vim.cmd("%bdelete")
           vim.cmd("cd " .. selected.value)
         end
       end)
