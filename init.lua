@@ -25,7 +25,7 @@ vim.cmd.colorscheme("tokyonight")
 vim.keymap.set("n", "<leader>e", ":Neotree toggle reveal<CR>")
 
 -- Neovim内蔵ターミナルを無効化（tmuxを使用）
-vim.api.nvim_create_user_command("terminal", function() vim.notify("Use tmux instead", vim.log.levels.WARN) end, {})
+vim.api.nvim_create_user_command("Terminal", function() vim.notify("Use tmux instead", vim.log.levels.WARN) end, {})
 
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')
