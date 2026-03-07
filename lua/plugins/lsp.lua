@@ -10,7 +10,12 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls", "ts_ls" },
+        ensure_installed = (function()
+          local servers = {}
+          if vim.fn.executable("go") == 1 then table.insert(servers, "gopls") end
+          if vim.fn.executable("node") == 1 then table.insert(servers, "ts_ls") end
+          return servers
+        end)(),
       })
     end,
   },
