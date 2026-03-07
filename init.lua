@@ -18,18 +18,14 @@ vim.opt.clipboard = "unnamedplus"
 vim.g.editorconfig = true
 
 require("config.lazy")
-require("config.neovide") -- Neovide設定
 
 vim.cmd.colorscheme("tokyonight")
 
 -- キーマップ
 vim.keymap.set("n", "<leader>e", ":Neotree toggle reveal<CR>")
 
--- ウィンドウ間の移動
-vim.keymap.set({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w>h", { noremap = true, silent = true, desc = "左のウィンドウへ移動" })
-vim.keymap.set({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w>j", { noremap = true, silent = true, desc = "下のウィンドウへ移動" })
-vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w>k", { noremap = true, silent = true, desc = "上のウィンドウへ移動" })
-vim.keymap.set({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w>l", { noremap = true, silent = true, desc = "右のウィンドウへ移動" })
+-- Neovim内蔵ターミナルを無効化（tmuxを使用）
+vim.api.nvim_create_user_command("terminal", function() vim.notify("Use tmux instead", vim.log.levels.WARN) end, {})
 
 -- Telescope (曖昧検索)
 local builtin = require('telescope.builtin')
